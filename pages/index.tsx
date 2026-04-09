@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Head from "next/head";
 import type { GetServerSideProps } from "next";
 import Card from "@/components/Card";
 import Pagination from "@/components/Pagination";
 import { fetchPostsWithCount, type Post } from "@/services/api";
+import { generateMetadataTags, type Metadata } from "@/lib/metadata";
 
 type HomeProps = {
   posts: Post[];
@@ -21,8 +23,28 @@ export default function Home({ posts = [], currentPage = 1, totalPages = 1, erro
     router.push(`/?page=${page}`);
   };
 
+  const pageMetadata: Metadata = {
+    title: `pageRouter - Page ${currentPage}`,
+    description: `Browse posts from our collection. Page ${currentPage} of ${totalPages}.`,
+    openGraph: {
+      title: `pageRouter - Page ${currentPage}`,
+      description: `Browse posts from our collection. Page ${currentPage} of ${totalPages}.`,
+      url: `/?page=${currentPage}`
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-slate-50 px-4 py-8 text-slate-900">
+    <>
+      <Head>
+        {generateMetadataTags(pageMetadata)}
+        {currentPage > 1 && (
+          <link rel="prev" href={`/?page=${currentPage - 1}`} />
+        )}
+        {currentPage < totalPages && (
+          <link rel="next" href={`/?page=${currentPage + 1}`} />
+        )}
+      </Head>
+      <div className="min-h-screen bg-slate-50 px-4 py-8 text-slate-900">
       <header className="mx-auto h-full mb-8 max-w-6xl rounded-3xl border border-slate-200 bg-white p-6 shadow-sm ">
         <h1 className="text-3xl font-semibold">Posts</h1>
       </header>
@@ -56,6 +78,7 @@ export default function Home({ posts = [], currentPage = 1, totalPages = 1, erro
         <Pagination currentPage={currentPage} totalPages={safeTotalPages} onPageChange={handlePageChange} />
       </footer>
     </div>
+    </>
   );
 }
 

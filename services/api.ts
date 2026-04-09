@@ -1,6 +1,6 @@
 
 
- const POSTS_PER_PAGE = 9;
+const POSTS_PER_PAGE = 9;
 const POSTS_API_BASE = "https://jsonplaceholder.typicode.com";
 
 
