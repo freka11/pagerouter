@@ -1,15 +1,50 @@
 import Link from "next/link";
 import type { GetServerSideProps } from "next";
 import { fetchPost, type Post } from "@/services/api";
+import Head from "next/head";
 
 type PostPageProps = {
   post?: Post;
   error?: string;
 };
 
+
+
+
+
 export default function PostPage({ post, error }: PostPageProps) {
+  const title = post ? `PageRouter - ${post.title}` : "Post not found";
+  const description = post
+    ? `ID: ${post.id}, body: ${post.body}`
+    : "Post not available";
+  const url = post ? `/posts/${post.id}` : "/";
+  const imgid = post?.id || 1;
+
   return (
-    <div className="min-h-screen bg-slate-50 px-4 py-12">
+    <>
+      <Head>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={url} />
+        <meta property="og:image" content={`https://picsum.photos/400/200?random=${imgid}`} />
+
+        <meta name="twitter:card" content="summary_large_image"></meta>
+
+        {post && (
+          <>
+            <meta
+              name="keywords"
+              content={`nextjs, react, page router, posts, post-${post.id}`}
+            />
+           
+          </>
+        )}
+      </Head>
+    
+      <div className="min-h-screen bg-slate-50 px-4 py-12">
       <div className="mx-auto w-full max-w-6xl space-y-8">
         {error ? (
           <div className="rounded-3xl border border-rose-200 bg-rose-50 p-8 text-rose-900">
@@ -49,6 +84,8 @@ export default function PostPage({ post, error }: PostPageProps) {
         )}
       </div>
     </div>
+    </>
+
   );
 }
 
