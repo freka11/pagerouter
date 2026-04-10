@@ -5,7 +5,7 @@ import type { GetServerSideProps } from "next";
 import Card from "@/components/Card";
 import Pagination from "@/components/Pagination";
 import { fetchPostsWithCount, type Post } from "@/services/api";
-import { generateMetadataTags, type Metadata } from "@/lib/metadata";
+import type { Metadata } from "next";
 
 type HomeProps = {
   posts: Post[];
@@ -22,28 +22,43 @@ export default function Home({ posts = [], currentPage = 1, totalPages = 1, erro
   const handlePageChange = (page: number) => {
     router.push(`/?page=${page}`);
   };
+  const title = `PageRouter - Page ${currentPage}`;
+  const description = `Browse posts from our collection. Page ${currentPage} of ${totalPages}.`;
+  const url = `/?page=${currentPage}`;
 
-  const pageMetadata: Metadata = {
-    title: `pageRouter - Page ${currentPage}`,
-    description: `Browse posts from our collection. Page ${currentPage} of ${totalPages}.`,
-    openGraph: {
-      title: `pageRouter - Page ${currentPage}`,
-      description: `Browse posts from our collection. Page ${currentPage} of ${totalPages}.`,
-      url: `/?page=${currentPage}`
-    }
-  };
+
+  
 
   return (
     <>
-      <Head>
-        {generateMetadataTags(pageMetadata)}
-        {currentPage > 1 && (
-          <link rel="prev" href={`/?page=${currentPage - 1}`} />
-        )}
-        {currentPage < totalPages && (
-          <link rel="next" href={`/?page=${currentPage + 1}`} />
-        )}
-      </Head>
+    <Head>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={url} />
+
+        <meta
+          name="keywords"
+          content={`nextjs, react, page router, posts, page-${currentPage}`}
+        />
+         <meta property="og:image" content={`https://picsum.photos/400/200?random=${currentPage}`} />
+
+        <meta
+          name="page:posts"
+          content={JSON.stringify(
+            posts.map((p) => ({
+              id: p.id,
+              userId: p.userId,
+              title: p.title,
+              body: p.body,
+            }))
+          )}
+          
+        />
+        <meta name="twitter:card" content="summary_large_image"></meta>
+              </Head>
       <div className="min-h-screen bg-slate-50 px-4 py-8 text-slate-900">
       <header className="mx-auto h-full mb-8 max-w-6xl rounded-3xl border border-slate-200 bg-white p-6 shadow-sm ">
         <h1 className="text-3xl font-semibold">Posts</h1>
