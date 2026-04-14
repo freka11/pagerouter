@@ -31,7 +31,9 @@ export default function PostPage({ post, error }: PostPageProps) {
         <meta property="og:url" content={url} />
         <meta property="og:image" content={`https://picsum.photos/400/200?random=${imgid}`} />
 
-        <meta name="twitter:card" content="summary_large_image"></meta>
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:description" content={title} />
+        <meta property="twitter:title" content={description} />
 
         {post && (
           <>

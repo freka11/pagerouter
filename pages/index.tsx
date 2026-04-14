@@ -57,7 +57,9 @@ export default function Home({ posts = [], currentPage = 1, totalPages = 1, erro
           )}
           
         />
-        <meta name="twitter:card" content="summary_large_image"></meta>
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:description" content={title} />
+        <meta property="twitter:title" content={description} />
               </Head>
       <div className="min-h-screen bg-slate-50 px-4 py-8 text-slate-900">
       <header className="mx-auto h-full mb-8 max-w-6xl rounded-3xl border border-slate-200 bg-white p-6 shadow-sm ">
