@@ -43,7 +43,7 @@ export default function Home({ posts = [], currentPage = 1, totalPages = 1, erro
           name="keywords"
           content={`nextjs, react, page router, posts, page-${currentPage}`}
         />
-         <meta property="og:image" content={`https://picsum.photos/400/200?random=${currentPage}`} />
+         <meta property="og:image" content={`https://picsum.photos/id/${currentPage}/400/200`} />
 
         <meta
           name="page:posts"

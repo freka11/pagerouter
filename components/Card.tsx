@@ -8,7 +8,7 @@ export default function Card({ id, title, body }: CardProps) {
   return (
     <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm shadow-slate-100 hover:scale-105 active:scale-100 transition-transform">
       <img
-        src={`https://picsum.photos/400/200?random=${id || Math.random()}`}
+        src={`https://picsum.photos/id/${id}/400/200`}
         alt={title}
         className="w-full h-48 object-cover rounded-lg mb-4"
       />

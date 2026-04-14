@@ -29,7 +29,7 @@ export default function PostPage({ post, error }: PostPageProps) {
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
         <meta property="og:url" content={url} />
-        <meta property="og:image" content={`https://picsum.photos/400/200?random=${imgid}`} />
+        <meta property="og:image" content={`https://picsum.photos/id/${post?.id}/400/200`} />
 
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:description" content={title} />
@@ -70,7 +70,7 @@ export default function PostPage({ post, error }: PostPageProps) {
               <p className="text-sm uppercase tracking-[0.2em] text-slate-500">Post #{post.id}</p>
             </div>
             <img
-              src={`https://picsum.photos/1200/500?random=${post.id}`}
+              src={`https://picsum.photos/id/${post.id}/1200/500`}
               alt={post.title}
               className="w-full h-72 object-cover rounded-3xl"
             />
